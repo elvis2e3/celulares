@@ -1,4 +1,6 @@
 
+import 'package:celulares/model/celular_model.dart';
+import 'package:celulares/provider/celular_provider.dart';
 import 'package:flutter/material.dart';
 
 class FormCelularPage extends StatefulWidget {
@@ -11,6 +13,7 @@ class _FormCelularPageState extends State<FormCelularPage> {
   String _marca = "";
   String _modelo = "";
   bool es_crear_celular;
+  CelularProvider _celularProvider = new CelularProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +48,14 @@ class _FormCelularPageState extends State<FormCelularPage> {
             RaisedButton(
               child: Text("Guardar"),
               onPressed: (){
-
+                  print(_marca);
+                  print(_modelo);
+                  Celular celular = new Celular(marca: _marca, modelo: _modelo);
+                  _celularProvider.postCelulares(celular).then((value){
+                    if(value){
+                      Navigator.pop(context);
+                    }
+                  });
               },
             )
           ],
